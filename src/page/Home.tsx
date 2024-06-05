@@ -6,21 +6,33 @@ import "../styles/HomePage.css";
 import { getMovies } from "../services/APIService";
 import Movie from "../models/Movie";
 import MovieList from "../components/movielist";
+import Loader from "../components/LoaderAPI";
 
 //app es un componente de tipo funcion de reactx
+//useState variable de react
 const Home: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     getMovies().then((movies: Movie[]) => {
       setMovies(movies);
     });
   }, []);
+
+  function buttonAlert() {
+    //cuando hagamos click, debe ser true
+    setIsLoading(true);
+  }
+
   return (
     <div>
       <h1>Cinema Paraíso</h1>
-   {/* {movies} son las peliculas */}
-      <MovieList movies={movies}/>
+      <button onClick={buttonAlert}>{"Loading..."}</button>
+      {isLoading === true && <Loader />}
+
+      {/* {movies} son las peliculas */}
+      <MovieList movies={movies} />
     </div>
   );
 };

@@ -1,10 +1,12 @@
-import React from 'react';
-import './Loader.css'; // Estilos opcionales para el loader
+import React from "react";
+import "../styles/LoaderAPI.css"; // Estilos opcionales para el loader
 
 const Loader: React.FC = () => {
   return (
-    <div className="loader">
-      Loading...
+    <div className="background-loader">
+      <div className="loader">
+        <div className="loaderBar"></div>
+      </div>
     </div>
   );
 };

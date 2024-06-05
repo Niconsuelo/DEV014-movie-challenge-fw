@@ -7,7 +7,9 @@ import { formatMovie } from "../utils/transformers";
 const URL_API = "https://api.themoviedb.org/3";
 const apiKey =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGNjOTZmMTllNzJiYTgxY2UxNWMxMWRkOWJkZjMxYiIsInN1YiI6IjY2NGNkYTI4YThhNThkY2I3YTZlYjIwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bY82hbPJncqfBkEZaG4ZifQPcyUFrYLk-QpIyaKg6Oc";
-const mockData = {
+const queryAPI = "?include_adult=true&include_video=false&language=en-US&page=2&sort_by=popularity.desc&with_genres=28||80||27||9648||53||878"
+  //mockDataAPI
+  const mockData = {
   page: 1,
   results: [
     {
@@ -352,7 +354,7 @@ const mockData = {
   ],
   total_pages: 44483,
   total_results: 889655,
-};
+}; 
 
 export function getMovies(): Promise<Movie[]> {
   // Construir la URL del endpoint /discover/movie de The Movie DB
@@ -360,12 +362,13 @@ export function getMovies(): Promise<Movie[]> {
     throw new Error("apiKey not found");
   }
   //construir url de la API
-  const url = `${URL_API}/discover/movie`;
+  const url = `${URL_API}/discover/movie?${queryAPI}`;
 
-  //debe borrarse
+  //mock uso API
   return new Promise((resolve) => {
     resolve(mockData.results);
   });
+  
 
   // Realiza una solicitud HTTP GET utilizando fetch y retornar la promesa
   return fetch(`${url}`, {
