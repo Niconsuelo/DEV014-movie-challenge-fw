@@ -25,15 +25,24 @@
     justify-content: center;
 flex-direction: column;
 line-height: 0.3em;
+overflow-wrap: break-word;
+text-overflow: ellipsis;
+width: 160px;
+letter-spacing: 1.5px;
+align-items: center;
+justify-content: center;
 }
 
 .text-title {
   font-size: large;
   color: beige;
- 
+  line-height: 1em;
+
 }
 
 .text-card-year {
   font-size: small;
   opacity: 0.5;
+  color: #fff;
+  
 }

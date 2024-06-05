@@ -12,7 +12,7 @@ import Loader from "../components/LoaderAPI";
 //useState variable de react
 const Home: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [buttonLoader, setLoader] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     getMovies().then((movies: Movie[]) => {
@@ -22,14 +22,14 @@ const Home: React.FC = () => {
 
   function buttonAlert() {
     //cuando hagamos click, debe ser true
-    setLoader(true);
+    setIsLoading(true);
   }
 
   return (
     <div>
       <h1>Cinema Paraíso</h1>
       <button onClick={buttonAlert}>{"Loading..."}</button>
-      {buttonLoader === true && <Loader />}
+      {isLoading === true && <Loader />}
 
       {/* {movies} son las peliculas */}
       <MovieList movies={movies} />
