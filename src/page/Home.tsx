@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/HomePage.css";
 import { getMovies } from "../services/APIService";
 import Movie from "../models/Movie";
-import MovieList from "../components/MovieList";
+import MovieList from "../components/movielist";
 
 //app es un componente de tipo funcion de reactx
 const Home: React.FC = () => {
