@@ -5,44 +5,46 @@
   justify-content: space-around;
   gap: 65px;
 }
+.container-card-movie{
+  list-style-type: none;
+  
+}
 
-.movie-card-image {
+.container-card-image-movie {
+  background-color: rgba(255, 255, 255, 0.552);
+  border-radius: 10px;
+  width: 200px;
+}
+
+.movie-image {
   width: 140px; /* Ancho completo del póster */
   height: 200px; /* Altura automática para mantener la proporción */
   margin-left: 30px;
   margin-bottom: -6px;
 }
 
-.container-card-image {
-  background-color: rgba(255, 255, 255, 0.552);
-  border-radius: 10px;
-  width: 200px;
+.text-card-movie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  line-height: 0.3em;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  width: 160px;
+  letter-spacing: 1.5px;
+  align-items: center;
+  justify-content: center;
 }
 
-.text-card-movie{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-flex-direction: column;
-line-height: 0.3em;
-overflow-wrap: break-word;
-text-overflow: ellipsis;
-width: 160px;
-letter-spacing: 1.5px;
-align-items: center;
-justify-content: center;
-}
-
-.text-title {
+.text-card-title {
   font-size: large;
   color: beige;
   line-height: 1em;
-
 }
 
 .text-card-year {
   font-size: small;
   opacity: 0.5;
   color: #fff;
-  
 }

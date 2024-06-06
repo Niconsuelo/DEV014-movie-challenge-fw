@@ -24,9 +24,6 @@ body {
   background-attachment: fixed;
 }
 
-.none-style-li{
-  list-style-type: none;
-}
 
 @media (prefers-color-scheme: light) {
   :root {

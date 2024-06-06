@@ -8,6 +8,8 @@ import Movie from "../models/Movie";
 import MovieList from "../components/movielist";
 import Loader from "../components/LoaderAPI";
 
+
+
 //app es un componente de tipo funcion de reactx
 //useState variable de react
 const Home: React.FC = () => {
