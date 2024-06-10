@@ -9,9 +9,8 @@ h1 {
   text-transform: uppercase;
   font-weight: lighter;
   color: white;
-  padding: 70px;
+  padding: 50px;
+  font-size: 65px;
+  margin-top: 6px;
 }
 
-h2{
-  text-transform: uppercase;
-}

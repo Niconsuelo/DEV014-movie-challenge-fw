@@ -29,7 +29,7 @@ body {
   left:0;
   background:#fff; 
   width:0;
-  animation:borealisBarSlow 50s ease-in-slow;
+  animation:borealisBar 3s linear infinite;
 }
 
 

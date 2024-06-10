@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/MovieCard.css";
 import "../styles/HomePage.css";
 import "../styles/MovieList.css"
+import "../styles/NavBar.css"
 import { getMovies } from "../services/APIService";
 import Movie from "../models/Movie";
 import MovieList from "../components/movielist";
@@ -31,7 +32,8 @@ const Home: React.FC = () => {
   return (
     <div>
       <h1>descubre los clásicos de culto en cinema paraíso</h1>
-     
+      <div className="container-nav-bar">hola1</div>
+    
       {isLoading && <Loader />}
 
       {/* {movies} son las peliculas */}
