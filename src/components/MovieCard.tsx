@@ -1,4 +1,5 @@
 import Movie from "../models/Movie";
+import "../styles/MovieCard.css";
 
 interface MovieCardProps {
   movie: Movie;
