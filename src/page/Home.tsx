@@ -2,7 +2,9 @@
 //define peliculas y pasa a componentes.
 
 import React, { useEffect, useState } from "react";
+import "../styles/MovieCard.css";
 import "../styles/HomePage.css";
+import "../styles/MovieList.css"
 import { getMovies } from "../services/APIService";
 import Movie from "../models/Movie";
 import MovieList from "../components/movielist";
@@ -17,21 +19,20 @@ const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setIsLoading(true);
     getMovies().then((movies: Movie[]) => {
       setMovies(movies);
-    });
+    
+    }).finally(() => {
+      setIsLoading(false);
+    })
   }, []);
-
-  function buttonAlert() {
-    //cuando hagamos click, debe ser true
-    setIsLoading(true);
-  }
 
   return (
     <div>
-      <h1>Cinema Paraíso</h1>
-      <button onClick={buttonAlert}>{"Loading..."}</button>
-      {isLoading === true && <Loader />}
+      <h1>descubre los clásicos de culto en cinema paraíso</h1>
+     
+      {isLoading && <Loader />}
 
       {/* {movies} son las peliculas */}
       <MovieList movies={movies} />
