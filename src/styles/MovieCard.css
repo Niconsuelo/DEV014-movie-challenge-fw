@@ -1,0 +1,44 @@
+.container-card-movie {
+  list-style-type: none;
+}
+.container-card-image-movie {
+  background-color: rgba(255, 255, 255, 0.552);
+  border-radius: 10px;
+  width: 200px;
+}
+.movie-image {
+  width: 140px; /* Ancho completo del póster */
+  height: 200px; /* Altura automática para mantener la proporción */
+  margin-left: 30px;
+  margin-bottom: -6px;
+}
+
+.text-card-movie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  line-height: 0.3em;
+  overflow-wrap: break-word;
+
+  width: 160px;
+  letter-spacing: 1.5px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.text-card-title {
+  font-size: large;
+  color: beige;
+  line-height: 1em;
+  font-size:medium;
+  margin: 10px 0px 0px 0px;
+  text-align: center;
+}
+
+.text-card-year {
+  font-size: small;
+  opacity: 0.5;
+  color: #fff;
+}
