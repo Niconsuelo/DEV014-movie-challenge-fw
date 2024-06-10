@@ -7,7 +7,7 @@ import { formatMovie } from "../utils/transformers";
 const URL_API = "https://api.themoviedb.org/3";
 const apiKey =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGNjOTZmMTllNzJiYTgxY2UxNWMxMWRkOWJkZjMxYiIsInN1YiI6IjY2NGNkYTI4YThhNThkY2I3YTZlYjIwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bY82hbPJncqfBkEZaG4ZifQPcyUFrYLk-QpIyaKg6Oc";
-const queryAPI = "?include_adult=true&include_video=false&language=en-US&page=3&sort_by=popularity.desc&with_genres=80||27||9648||53"
+const queryAPI = "?include_adult=true&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=80||27||9648||53"
 const url = `${URL_API}/discover/movie?${queryAPI}`;
 console.log("Constructed URL:", url);
 //mockDataAPI
