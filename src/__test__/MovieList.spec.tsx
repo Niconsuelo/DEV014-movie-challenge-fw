@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import MovieList from '../components/movielist';
 import Movie from '../models/Movie';
+import MovieList from '../components/Movielist';
 
 const mockMovieList: Movie[] = [
         {

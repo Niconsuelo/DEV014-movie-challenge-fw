@@ -7,7 +7,7 @@ import "../styles/MovieList.css"
 import "../styles/NavBar.css"
 import { getMovies } from "../services/APIService";
 import Movie from "../models/Movie";
-import MovieList from "../components/movielist";
+import MovieList from "../components/Movielist";
 import Loader from "../components/LoaderAPI";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
