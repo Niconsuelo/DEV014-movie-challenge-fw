@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import Movie from '../models/Movie';
+import '@testing-library/jest-dom';
 import MovieList from '../components/Movielist';
+import Movie from '../models/Movie';
 
+// Mock de películas
 const mockMovieList: Movie[] = [
-        {
+  {
     adult: false,
     backdrop_path: "/tkHQ7tnYYUEnqlrKuhufIsSVToU.jpg",
     genre_ids: [27],
@@ -55,24 +56,28 @@ const mockMovieList: Movie[] = [
     vote_average: 7.7,
     vote_count: 1355,
   },
-]
+];
 
-it('should render movie titles correctly', () => {
+describe('Testing MovieList component', () => {
+  beforeEach(() => {
     render(<MovieList movies={mockMovieList} />);
-    mockMovieList.forEach(movie => {
+  });
+
+  test('renders movie titles', () => {
+    mockMovieList.forEach((movie) => {
       expect(screen.getByText(movie.original_title)).toBeInTheDocument();
     });
   });
-  it('should render movie release dates correctly', () => {
-    render(<MovieList movies={mockMovieList} />);
-    mockMovieList.forEach(movie => {
+
+  test('renders movie release dates', () => {
+    mockMovieList.forEach((movie) => {
       expect(screen.getByText(movie.release_date)).toBeInTheDocument();
     });
   });
 
-  it('should render movie overviews correctly', () => {
-    render(<MovieList movies={mockMovieList} />);
-    mockMovieList.forEach(movie => {
-      expect(screen.getByText(movie.overview)).toBeInTheDocument();
+  test('renders movie original languaje', () => {
+    mockMovieList.forEach((movie) => {
+      expect(screen.getByText(movie.original_language)).toBeInTheDocument();
     });
   });
+});
