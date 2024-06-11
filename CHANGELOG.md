@@ -17,7 +17,7 @@ add sprint 1 (2 days)
 * Use of Jest library for testing functions and components.
 * Development of a getMovies function to retrieve movie data from an API, including configuration for the GET request including API token.
 * Development of a function to transform movie data from the API.
-
+* creacion de componente paginate
 
 
 ### Changed
