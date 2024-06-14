@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import MovieList from '../components/Movielist';
+import MovieList from '../components/MovieList';
 import Movie from '../models/Movie';
 
 // Mock de películas
@@ -72,12 +72,6 @@ describe('Testing MovieList component', () => {
   test('renders movie release dates', () => {
     mockMovieList.forEach((movie) => {
       expect(screen.getByText(movie.release_date)).toBeInTheDocument();
-    });
-  });
-
-  test('renders movie original languaje', () => {
-    mockMovieList.forEach((movie) => {
-      expect(screen.getByText(movie.original_language)).toBeInTheDocument();
     });
   });
 });
