@@ -30,3 +30,4 @@ export function formatMovie(apiMovie: ApiMovieResult): Movie {
     vote_count: apiMovie.vote_count,
   };
 }
+

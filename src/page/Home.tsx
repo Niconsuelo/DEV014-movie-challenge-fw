@@ -3,14 +3,14 @@
 
 import React, { useEffect, useState } from "react";
 import "../styles/HomePage.css";
-import "../styles/MovieList.css"
-import "../styles/NavBar.css"
+import "../styles/MovieList.css";
+import "../styles/NavBar.css";
 import { getMovies } from "../services/APIService";
 import Movie from "../models/Movie";
-import MovieList from "../components/Movielist";
 import Loader from "../components/LoaderAPI";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MovieList from "../components/MovieList";
 
 
 //app es un componente de tipo funcion de reactx
@@ -19,23 +19,32 @@ const Home: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-
   useEffect(() => {
     setIsLoading(true);
-    const id = toast.loading("Please wait...")
-    getMovies().then((movies: Movie[]) => {
-      setMovies(movies);
-      toast.update(id, { render: "¡Bienvenido! La página se ha cargado con éxito.", type: "success", isLoading: false });
-    
-    }).catch ((error) => {
-      toast.update(id, { render: error.message, type: "error", isLoading: false });
-
-    }).finally(() => {
-      setIsLoading(false);
-
-    })
-  },[])
-
+    const id = toast.loading("Please wait...");
+   
+    getMovies({page: 2})
+      .then((movies: Movie[]) => {
+        setMovies(movies);
+        toast.update(id, {
+          render: "¡Bienvenido! La página se ha cargado con éxito.",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      })
+      .catch((error) => {
+        toast.update(id, {
+          render: error.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <div>
