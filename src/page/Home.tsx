@@ -10,7 +10,8 @@ import Movie from "../models/Movie";
 import Loader from "../components/LoaderAPI";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MovieList from "../components/MovieList";
+import MovieList from "../components/movielist";
+import ListPaginationList from "../models/ListPaginationMovie";
 
 
 //app es un componente de tipo funcion de reactx
@@ -24,7 +25,8 @@ const Home: React.FC = () => {
     const id = toast.loading("Please wait...");
    
     getMovies({page: 2})
-      .then((movies: Movie[]) => {
+      .then((data: ListPaginationList) => {
+        const movies = data.movies;
         setMovies(movies);
         toast.update(id, {
           render: "¡Bienvenido! La página se ha cargado con éxito.",

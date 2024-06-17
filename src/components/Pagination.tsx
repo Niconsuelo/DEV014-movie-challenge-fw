@@ -24,7 +24,11 @@ const Pagination: React.FC<PaginateProps> = ({
   };
 
   return (
+    <div className="pagination-container">
     <div className="pagination">
+    <a href="#">1</a>
+    <a href="#" className="active">2</a>
+    <a href="#">3</a>
       {/* Mostrar botones de página */}
       {Array.from({ length: totalPage }, (_, index) => index + 1).map(numberPage => (
         <button
@@ -35,6 +39,7 @@ const Pagination: React.FC<PaginateProps> = ({
           {numberPage}
         </button>
       ))}
+    </div>
     </div>
   );
 };
