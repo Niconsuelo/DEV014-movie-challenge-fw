@@ -1,8 +1,9 @@
 import ApiMovieList from "../models/ApiMovieList";
 import ApiMovieResult from "../models/ApiMovieResult";
-import Movie from "../models/Movie";
 import { formatMovie } from "../utils/transformers";
 import { MovieFilters } from "../models/MovieFilters";
+import ListPaginationMovie from "../models/ListPaginationMovie";
+import Metadata from "../models/MetaData";
 //import { formatMovie } from "../utils/transformers";
 
 const URL_API = "https://api.themoviedb.org/3";
@@ -357,8 +358,8 @@ const url = `${URL_API}/discover/movie?`;
 }; 
 */
 
-
-export function getMovies(filters: MovieFilters): Promise<Movie[]> {
+//Información de paginación, útil para el front-end para mostrar la navegación entre páginas de resultados.
+export function getMovies(filters: MovieFilters): Promise<ListPaginationMovie> {
   // Construir la URL del endpoint /discover/movie de The Movie DB
   if (!apiKey) {
     throw new Error("apiKey not found");
@@ -383,7 +384,17 @@ export function getMovies(filters: MovieFilters): Promise<Movie[]> {
       return response.json();
     })
     .then((data: ApiMovieList) => {
-      return data.results.map((movie: ApiMovieResult) => formatMovie(movie));
+      //transforma cada película en un objeto Movie usando formatMovie.
+      const movies = data.results.map((movie: ApiMovieResult) => formatMovie(movie));
+      //Se extrae la información de paginación y se guarda en metaData.
+      const metaData: Metadata = {
+        pagination: {
+          currentPage: data.page,
+          totalPages: data.total_pages,
+        },
+      };
+      //
+      return { metaData, movies};
     })
     .catch((error) => {
       console.error("Error fetching movies:", error);
