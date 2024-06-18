@@ -2,7 +2,7 @@
 // El componente ejecutar un callback cuando un usuario selecciona una nueva página.
 import React from "react";
 
-interface PaginateProps {
+interface PaginationProps {
   //numero de pagina actual
   currentPage: number;
   //numero total de paginas
@@ -12,35 +12,41 @@ interface PaginateProps {
   onSelectPage: (numberPage: number) => void;
 }
 
-const Pagination: React.FC<PaginateProps> = ({
+//1. iterar desde la primera pagina a la ultima
+//2. generar un boton por cada pagina
+//3.
+
+const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPage,
   onSelectPage,
 }) => {
-    //ejecutará cuando se haga clic en un botón de página.
-    //llama a la función onSelectPage con el número de página como argumento.
-  const clickPagination = (numberPage: number) => {
-    onSelectPage(numberPage);
-  };
+  // Crear un array para almacenar los botones de paginación
+  const pageButtons = [];
+
+  // bucle for para generar los botones
+  for (let i = 1; i <= totalPage; i++) {
+    pageButtons.push(
+      <button
+        //número de página como texto del botón {i}.
+        key={i}
+        //Un manejador de evento onClick={() => onSelectPage(i)} que llama a onSelectPage con el número de página correspondiente.
+        onClick={() => onSelectPage(i)}
+        //compara el número de la página actual (currentPage) con el número de página del botón (i).
+        //active:forma abreviada de una declaración if-else.
+        className={`pagination-button__button ${currentPage === i ? 'active' : ''}`}
+
+>
+        {i}
+      </button>
+    );
+  }
 
   return (
     <div className="pagination-container">
-    <div className="pagination">
-    <a href="#">1</a>
-    <a href="#" className="active">2</a>
-    <a href="#">3</a>
-      {/* Mostrar botones de página */}
-      {Array.from({ length: totalPage }, (_, index) => index + 1).map(numberPage => (
-        <button
-          key={numberPage}
-          onClick={() => clickPagination(numberPage)}
-          className={currentPage === numberPage ? 'active' : ''}
-        >
-          {numberPage}
-        </button>
-      ))}
-    </div>
+      <div className="pagination-button">{pageButtons}</div>
     </div>
   );
 };
+
 export default Pagination;
