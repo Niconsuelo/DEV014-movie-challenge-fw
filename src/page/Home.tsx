@@ -83,7 +83,10 @@ const Home: React.FC = () => {
         totalPage={totalPageMovie}
         onSelectPage={SelectPageNumber}
       />
+            <div className="footer">© 2024 All Rights Reserved</div>
+
     </div>
+    
   ); 
 };
 
