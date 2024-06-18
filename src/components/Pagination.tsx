@@ -1,6 +1,7 @@
 // componente debe recibir el número de página actual y el número total de páginas como props.
 // El componente ejecutar un callback cuando un usuario selecciona una nueva página.
 import React from "react";
+import "../styles/Pagination.css"
 
 interface PaginationProps {
   //numero de pagina actual
@@ -34,8 +35,7 @@ const Pagination: React.FC<PaginationProps> = ({
         onClick={() => onSelectPage(i)}
         //compara el número de la página actual (currentPage) con el número de página del botón (i).
         //active:forma abreviada de una declaración if-else.
-        className={`pagination-button__button ${currentPage === i ? 'active' : ''}`}
-
+        className={`pagination-button pagination-button-number ${currentPage === i ? 'active' : ''}`}
 >
         {i}
       </button>
@@ -43,10 +43,16 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
+  
     <div className="pagination-container">
-      <div className="pagination-button">{pageButtons}</div>
+      <div className="pagination-button-string pagination-button">Previous</div>
+      {pageButtons}
+      <div className="pagination-button-chanext"> Next</div>
     </div>
   );
 };
 
 export default Pagination;
+
+
+//className={`pagination-button__button ${currentPage === i ? 'active' : ''}`}
