@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import MovieList from '../components/MovieList';
+import MovieList from '../components/movielist';
 import Movie from '../models/Movie';
 
 // Mock de películas

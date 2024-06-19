@@ -1,0 +1,31 @@
+.button-search-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .search-button {
+    border-radius: 4px;
+    height: 40px;
+    width: 200px;
+    border: 0cap;
+    text-align: center;
+  }
+  
+  
+  .select-nav-bar {
+    padding: 10px;
+    padding-right: 30px; /* Espacio para el icono */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    cursor: pointer;
+  }
+  

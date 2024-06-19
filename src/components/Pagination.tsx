@@ -30,12 +30,13 @@ const Pagination: React.FC<PaginationProps> = ({
     pageButtons.push(
       <button
         //número de página como texto del botón {i}.
+        disabled={currentPage === i}
         key={i}
         //Un manejador de evento onClick={() => onSelectPage(i)} que llama a onSelectPage con el número de página correspondiente.
         onClick={() => onSelectPage(i)}
         //compara el número de la página actual (currentPage) con el número de página del botón (i).
         //active:forma abreviada de una declaración if-else.
-        className={`pagination-button pagination-button-number ${currentPage === i ? 'active' : ''}`}
+        className={`pagination-button pagination-button-number ${currentPage === i ? 'pagination-active' : ''}`}
 >
         {i}
       </button>
