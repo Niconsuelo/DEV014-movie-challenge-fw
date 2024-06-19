@@ -370,6 +370,7 @@ export function getMovies(filters: MovieFilters): Promise<ListPaginationMovie> {
   //});
   
   // Realiza una solicitud HTTP GET utilizando fetch y retornar la promesa
+  //filters nº de paginas
   return fetch(`${url}?page=${filters.page}`, {
     method: "GET", // Método de solicitud
     headers: {
