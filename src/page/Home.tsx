@@ -19,25 +19,32 @@ import NavBar from "../components/Navbar";
 //useState variable de react
 //set cambia asignar.
 const Home: React.FC = () => {
+  //definicion, manejo de estado del componente
+  //movieslistado, isloadingcontrola estado de carga loader, totalpagemovie nº paginas disponible, currenpage guarda pagina actual
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //es 0 porque no existe paginas inicialmente
   const [totalPageMovie, setTotalPageMovie] = useState<number>(0);
+  const [currentPageMovie, setCurrentPageMovie] = useState<number>(1);
   //en el padre se hacen las funciones
   //en el hijo se llaman
   //en el padre se declara para que sea reactivo
 
   //retorna number
-  //no retorna ningún valor (void), simplemente realiza una acción (en este caso, imprime en la consola).
+  //actualiza currentpage con nº de pagina seleccionado
   const SelectPageNumber = (numberPage: number) => {
+    //fx cambia estado
+    setCurrentPageMovie(numberPage);
     console.log(`Prueba: Página seleccionada: ${numberPage}`);
   };
 
+  //carga datos api
   useEffect(() => {
     setIsLoading(true);
     const id = toast.loading("Please wait...");
+    
     //network consulta api
-    getMovies({ page: 1 })
+    getMovies({ page: currentPageMovie })
       .then((data: ListPaginationList) => {
         const movies = data.movies;
         setMovies(movies);
@@ -64,7 +71,7 @@ const Home: React.FC = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [currentPageMovie]);
 
   //onSelect toma un número como argumento y no retorna ningún valor (void).
   //pasar hSelectPageNumber como la prop onSelectPage al componente Pagination.
@@ -79,7 +86,7 @@ const Home: React.FC = () => {
       <MovieList movies={movies} />
 
       <Pagination
-        currentPage={1}
+        currentPage={currentPageMovie}
         totalPage={totalPageMovie}
         onSelectPage={SelectPageNumber}
       />

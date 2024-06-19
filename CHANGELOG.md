@@ -3,12 +3,12 @@ add sprint 1 (2 days)
 
 ### Sprint learnings
 
-**API Management and HTTP Requests:** Initial implementation of API management and HTTP requests handling.
-**Code Modularization:** Segregation of code into modules to enhance organization and maintainability.
-**Data Transformation for React Components:** Emphasis on data transformation for proper functioning of components.
-**Unit Testing:** Implementation and integration of unit tests for components and functions.
-**React Components Development:** Creation and initial development of essential React components.
-**CSS Modularization:** Segmentation of CSS code for improved maintenance and scalability.
+* **API Management and HTTP Requests:** Initial implementation of API management and HTTP requests handling.
+* **Code Modularization:** Segregation of code into modules to enhance organization and maintainability.
+* **Data Transformation for React Components:** Emphasis on data transformation for proper functioning of components.
+* **Unit Testing:** Implementation and integration of unit tests for components and functions.
+* **React Components Development:** Creation and initial development of essential React components.
+* **CSS Modularization:** Segmentation of CSS code for improved maintenance and scalability.
 
 ### Added
 
@@ -40,12 +40,12 @@ add sprint 1 (2 days)
 
 ### Sprint learnings
 
-**Home View Styling Improvement:** Update and enhancement of the home page styling.
-**API Notifications:** Implementation of notifications (React toastify) during data retrieval from the API.
-**React Router Integration:** Integration of React Router in App.tsx.
-**Branch Creation:** Branch creation facilitated through GitHub.
-**Test Modularization:** Modularization of unit test files to improve code organization."
-**Unit Test Configuration:** Setting up tests with proper cleanup and isolation to prevent interference.
+* **Home View Styling Improvement:** Update and enhancement of the home page styling.
+* **API Notifications:** Implementation of notifications (React toastify) during data retrieval from the API.
+* **React Router Integration:** Integration of React Router in App.tsx.
+* **Branch Creation:** Branch creation facilitated through GitHub.
+* **Test Modularization:** Modularization of unit test files to improve code organization."
+* **Unit Test Configuration:** Setting up tests with proper cleanup and isolation to prevent interference.
 
 
 
