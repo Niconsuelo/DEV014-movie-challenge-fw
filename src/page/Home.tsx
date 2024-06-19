@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import MovieList from "../components/movielist";
 import ListPaginationList from "../models/ListPaginationMovie";
 import Pagination from "../components/Pagination";
+import NavBar from "../components/Navbar";
 
 //app es un componente de tipo funcion de reactx
 //useState variable de react
@@ -26,13 +27,11 @@ const Home: React.FC = () => {
   //en el hijo se llaman
   //en el padre se declara para que sea reactivo
 
+  //retorna number
   //no retorna ningún valor (void), simplemente realiza una acción (en este caso, imprime en la consola).
   const SelectPageNumber = (numberPage: number) => {
     console.log(`Prueba: Página seleccionada: ${numberPage}`);
   };
-
-  //variable react
-  //
 
   useEffect(() => {
     setIsLoading(true);
@@ -71,8 +70,9 @@ const Home: React.FC = () => {
   //pasar hSelectPageNumber como la prop onSelectPage al componente Pagination.
   return (
     <div>
-      <h1>descubre los clásicos de culto en cinema paraíso</h1>
-      <div className="container-nav-bar">esta es mi navbar</div>
+      <h1>descubre los clásicos de culto en <span className="h1-black">cinema paraíso</span></h1>
+      <NavBar />
+
       {isLoading && <Loader />}
 
       {/* {movies} son las peliculas */}
@@ -83,11 +83,9 @@ const Home: React.FC = () => {
         totalPage={totalPageMovie}
         onSelectPage={SelectPageNumber}
       />
-            <div className="footer">© 2024 All Rights Reserved</div>
-
+      <div className="footer">© 2024 All Rights Reserved</div>
     </div>
-    
-  ); 
+  );
 };
 
 export default Home;
