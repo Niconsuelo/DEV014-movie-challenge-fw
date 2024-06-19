@@ -44,11 +44,22 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-  
     <div className="pagination-container">
-      <div className="pagination-button-string pagination-button">Previous</div>
+    <button
+      className="pagination-button pagination-button-string"
+      onClick={() => onSelectPage(currentPage - 1)}
+      disabled={currentPage === 1}
+    >
+      Previous
+    </button>
       {pageButtons}
-      <div className="pagination-button-chanext"> Next</div>
+      <button
+        className="pagination-button pagination-button-string"
+        onClick={() => onSelectPage(currentPage + 1)}
+        disabled={currentPage === totalPage}
+      >
+        Next
+      </button>
     </div>
   );
 };

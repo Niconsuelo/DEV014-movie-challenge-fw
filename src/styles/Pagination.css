@@ -23,16 +23,19 @@
   border-radius: 10px;
   height: 29px;
   width: 59px;
-  padding: 10px 0px 0px 26px;
+  padding: 0px 0px 0px 26px;
   cursor: pointer;
+  border-style: hidden;
 }
 
 .pagination-button-string {
-  padding: 10px 26px 0px 16px;
+  padding: 0px 26px 0px 16px;
   border-radius: 10px;
-  height: 30px;
-  width: 48px;
+  height: 39px;
+  width: 80px;
   cursor: pointer;
+  color: black;
+  border-style: hidden;
 }
 .pagination-active {
     background-color: #4d2c44;
