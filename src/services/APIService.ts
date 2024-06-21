@@ -8,7 +8,7 @@ import Metadata from "../models/MetaData";
 
 const URL_API = "https://api.themoviedb.org/3";
 const apiKey ="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGNjOTZmMTllNzJiYTgxY2UxNWMxMWRkOWJkZjMxYiIsInN1YiI6IjY2NGNkYTI4YThhNThkY2I3YTZlYjIwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bY82hbPJncqfBkEZaG4ZifQPcyUFrYLk-QpIyaKg6Oc";
-const url = `${URL_API}/discover/movie?`;
+const url = `${URL_API}/discover/movie`;
 //mockDataAPI
  /* const mockData = {
   page: 1,
