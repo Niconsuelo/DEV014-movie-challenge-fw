@@ -1,16 +1,22 @@
 import ApiMovieList from "../models/ApiMovieList";
 import ApiMovieResult from "../models/ApiMovieResult";
-import { formatMovie } from "../utils/transformers";
+import { formatGenresToMap, formatMovie } from "../utils/transformers";
 import { MovieFilters } from "../models/MovieFilters";
 import ListPaginationMovie from "../models/ListPaginationMovie";
 import Metadata from "../models/MetaData";
+import getMovieGenres from "../models/MovieGenres";
+import MovieGenres from "../models/MovieGenres";
+import ApiMovieGenres from "../models/ApiMovieGenres";
 //import { formatMovie } from "../utils/transformers";
 
 const URL_API = "https://api.themoviedb.org/3";
-const apiKey ="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGNjOTZmMTllNzJiYTgxY2UxNWMxMWRkOWJkZjMxYiIsInN1YiI6IjY2NGNkYTI4YThhNThkY2I3YTZlYjIwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bY82hbPJncqfBkEZaG4ZifQPcyUFrYLk-QpIyaKg6Oc";
+const apiKey =
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGNjOTZmMTllNzJiYTgxY2UxNWMxMWRkOWJkZjMxYiIsInN1YiI6IjY2NGNkYTI4YThhNThkY2I3YTZlYjIwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bY82hbPJncqfBkEZaG4ZifQPcyUFrYLk-QpIyaKg6Oc";
 const url = `${URL_API}/discover/movie`;
+const urlGenre = `${URL_API}/genre/movie/list`;
+
 //mockDataAPI
- /* const mockData = {
+/* const mockData = {
   page: 1,
   results: [
     {
@@ -365,10 +371,10 @@ export function getMovies(filters: MovieFilters): Promise<ListPaginationMovie> {
     throw new Error("apiKey not found");
   }
   //mock uso API
- // return new Promise((resolve) => {
+  // return new Promise((resolve) => {
   //  resolve(mockData.results);
   //});
-  
+
   // Realiza una solicitud HTTP GET utilizando fetch y retornar la promesa
   //filters nº de paginas
   return fetch(`${url}?page=${filters.page}`, {
@@ -380,13 +386,17 @@ export function getMovies(filters: MovieFilters): Promise<ListPaginationMovie> {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Lo sentimos, pero no pudimos cargar la página. Intenta nuevamente más tarde");
+        throw new Error(
+          "Lo sentimos, pero no pudimos cargar la página. Intenta nuevamente más tarde"
+        );
       }
       return response.json();
     })
     .then((data: ApiMovieList) => {
       //transforma cada película en un objeto Movie usando formatMovie.
-      const movies = data.results.map((movie: ApiMovieResult) => formatMovie(movie));
+      const movies = data.results.map((movie: ApiMovieResult) =>
+        formatMovie(movie)
+      );
       //Se extrae la información de paginación y se guarda en metaData.
       const metaData: Metadata = {
         pagination: {
@@ -395,7 +405,44 @@ export function getMovies(filters: MovieFilters): Promise<ListPaginationMovie> {
         },
       };
       //
-      return { metaData, movies};
+      return { metaData, movies };
+    })
+    .catch((error) => {
+      console.error("Error fetching movies:", error);
+      throw error;
+    });
+}
+
+export function getMovieGenres(): Promise<Map<number,string>> {
+  if (!apiKey) {
+    throw new Error("apiKey not found");
+  }
+
+  return fetch(`${urlGenre}`, {
+    method: "GET", // Método de solicitud
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`, // Ejemplo de header de autorización
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          "Lo sentimos, pero no pudimos cargar la página. Intenta nuevamente más tarde"
+        );
+      }
+      return response.json();
+    })
+    .then((data: ApiMovieGenres) => {
+      //verifica que data.genres exista y sea un array
+      if (!data.genres || !Array.isArray(data.genres)) {
+        throw new Error("Invalid response ApiGenreResponse");
+      }
+      //Si la validación es exitosa, se transforma data.genres en un array de objetos { id: number, name: string } usando map.
+      //devuelve el nuevo array de objetos transformados.
+
+      const genresMovies = formatGenresToMap(data.genres)
+      return genresMovies;
     })
     .catch((error) => {
       console.error("Error fetching movies:", error);
