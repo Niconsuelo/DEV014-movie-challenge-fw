@@ -24,17 +24,18 @@ const Home: React.FC = () => {
   //movieslistado, isloadingcontrola estado de carga loader, totalpagemovie nº paginas disponible, currenpage guarda pagina actual
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page");
- 
+
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //es 0 porque no existe paginas inicialmente
   const [totalPageMovie, setTotalPageMovie] = useState<number>(0);
-  const [currentPageMovie, setCurrentPageMovie] = useState<number>(page ? Number(page) : 1);
+  const [currentPageMovie, setCurrentPageMovie] = useState<number>(
+    page ? Number(page) : 1
+  );
   //useSearchParams permite leer y manipular los parametros de consulta url
   //search, obj contiene parametro consulta actual url
   //setsearchpaams actualiza parametro de consulta url
   const [firstLoad, setFirstLoad] = useState<boolean>(false);
-  
 
   //en el padre se hacen las funciones
   //en el hijo se llaman
@@ -51,12 +52,10 @@ const Home: React.FC = () => {
   };
 
   //lee el parámetro page de la URL y actualizar currentPageMovie
- 
 
   //carga datos api
   // Efecto que se ejecuta cuando currentPageMovie cambia
   useEffect(() => {
-   
     setIsLoading(true);
 
     const id = toast.loading("Por favor espere...");
@@ -80,8 +79,8 @@ const Home: React.FC = () => {
           });
         } else {
           setTimeout(() => {
-            toast.dismiss(id)
-          }, 800)
+            toast.dismiss(id);
+          }, 800);
         }
 
         setFirstLoad(true);
@@ -103,6 +102,7 @@ const Home: React.FC = () => {
 
   //onSelect toma un número como argumento y no retorna ningún valor (void).
   //pasar hSelectPageNumber como la prop onSelectPage al componente Pagination.
+
   return (
     <div className="container-home">
       <h1>
@@ -110,7 +110,7 @@ const Home: React.FC = () => {
         <span className="h1-black">cinema paraíso</span>
       </h1>
       <NavBar />
-     {/* <ModalDetailMovie/> */}
+      {/* <ModalDetailMovie/> */}
       {isLoading && <Loader />}
 
       {/* {movies} son las peliculas */}
@@ -121,9 +121,8 @@ const Home: React.FC = () => {
         totalPage={totalPageMovie}
         onSelectPage={SelectPageNumber} // Pasa la función SelectPageNumber como prop a Pagination
       />
-    
+
       <div className="footer">© 2024 All Rights Reserved</div>
-     
     </div>
   );
 };
