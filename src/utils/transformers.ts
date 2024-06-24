@@ -3,6 +3,7 @@
 // Definición del modelo de negocio Movie
 import ApiMovieResult from "../models/ApiMovieResult";
 import Movie from "../models/Movie";
+import MovieGenres from "../models/MovieGenres";
 
 // Función para transformar los datos de la API al modelo de negocio
 //Movie es la estructura del objeto que devolvera
@@ -31,3 +32,12 @@ export function formatMovie(apiMovie: ApiMovieResult): Movie {
   };
 }
 
+export function formatGenresToMap(movieGenre: MovieGenres[]): Map<number, string> {
+  const mapMovieGenres = new Map();
+
+  movieGenre.forEach(movieGenre => {
+    mapMovieGenres.set(movieGenre.id, movieGenre.name)
+  })
+  return mapMovieGenres;
+ 
+}

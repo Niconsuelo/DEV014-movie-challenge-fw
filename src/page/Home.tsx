@@ -15,7 +15,6 @@ import ListPaginationList from "../models/ListPaginationMovie";
 import Pagination from "../components/Pagination";
 import NavBar from "../components/Navbar";
 import { useSearchParams } from "react-router-dom";
-import ModalComponent from "../components/ModalDetailMovie";
 
 //app es un componente de tipo funcion de reactx
 //useState variable de react
@@ -105,13 +104,13 @@ const Home: React.FC = () => {
   //onSelect toma un número como argumento y no retorna ningún valor (void).
   //pasar hSelectPageNumber como la prop onSelectPage al componente Pagination.
   return (
-    <div>
+    <div className="container-home">
       <h1>
         descubre los clásicos de culto en{" "}
         <span className="h1-black">cinema paraíso</span>
       </h1>
       <NavBar />
-
+     {/* <ModalDetailMovie/> */}
       {isLoading && <Loader />}
 
       {/* {movies} son las peliculas */}
@@ -124,6 +123,7 @@ const Home: React.FC = () => {
       />
     
       <div className="footer">© 2024 All Rights Reserved</div>
+     
     </div>
   );
 };

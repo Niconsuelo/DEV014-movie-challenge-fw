@@ -1,36 +1,60 @@
 import React, { useState } from "react";
-import Modal from "styled-react-modal";
-import "../styles/ModalDetailMovie"; // Importa los estilos CSS
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
+import "../styles/ModalDetailMovie.css";
+import Movie from "../models/Movie";
 
-// Componente funcional que muestra el modal
-const ModalComponent: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface ModalDetailMovieProps {
+  movie: Movie;
+}
 
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+const ModalDetailMovie: React.FC<ModalDetailMovieProps> = ({ movie }) => {
+  const base_url = "https://image.tmdb.org/t/p/w500/";
+  const fullImageUrl = `${base_url}${movie.poster_path}`;
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
 
   return (
-    <>
-      <button className="modal-button" onClick={toggleModal}>
-        Open modal
-      </button>
-      <Modal.styled
-        isOpen={isOpen}
-        onBackgroundClick={toggleModal}
-        onEscapeKeydown={toggleModal}
-        style={{ transition: "all 0.3s ease-in-out" }}
-      >
-        <div className="modal-container">
-          <span>I am a modal!</span>
-          <button className="modal-button" onClick={toggleModal}>
-            Close me
-          </button>
+    <div>
+      <button onClick={onOpenModal}>Open modal</button>
+
+      <Modal open={open} onClose={onCloseModal} center>
+        <div className="container-movie-details">
+          <div className="container-movie-image">
+            <img className="img-movie-details" src={fullImageUrl} />
+          </div>
+
+          <div className="container-movie-text">
+            <div className="align-title">
+              <p className="title-movie-details">{movie.original_title}</p>
+              <p className="text-movie-details">{movie.popularity}</p>
+            </div>
+
+            <div className="container-details">
+              <div className="align-movie-details">
+                <h3>Release date:</h3>
+                <p className="text-movie-details">{movie.release_date}</p>
+              </div>
+
+              <div className="align-movie-details">
+                <h3>Genres:</h3>
+                <p className="text-movie-details">{movie.genre_ids}</p>
+              </div>
+
+              <div className="align-movie-details">
+                <h3>Overview:</h3>
+                <p className="text-movie-details">
+                {movie.overview}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        
-      </Modal.styled>
-    </>
+      </Modal>
+    </div>
   );
 };
 
-export default ModalComponent;
+export default ModalDetailMovie;
