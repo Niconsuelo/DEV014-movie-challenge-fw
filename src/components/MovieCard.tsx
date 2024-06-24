@@ -19,6 +19,7 @@ const releaseYear = new Date(movie.release_date).getFullYear();
       </div>
       <div className="text-card-movie">
         <p className="text-card-title">{movie.original_title}</p>
+        <p className="text-card-genres">{movie.genres}</p>
         <p className="text-card-year">{releaseYear}</p>
       </div>
     </li>
