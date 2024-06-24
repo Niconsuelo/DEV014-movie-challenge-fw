@@ -41,3 +41,10 @@
   opacity: 0.5;
   color: #fff;
 }
+.text-card-genres{
+  letter-spacing: 0.1em;
+  font-size: small;
+  opacity: 0.5;
+  color: #fff;
+  line-height: 15px;
+}

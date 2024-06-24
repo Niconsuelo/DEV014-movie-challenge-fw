@@ -15,15 +15,14 @@ const url = `${URL_API}/discover/movie`;
 const urlGenre = `${URL_API}/genre/movie/list`;
 
 // Función para obtener películas con filtros
-export function getMovies(filters: MovieFilters): Promise<ListPaginationMovie> {
+export function getMovies(filters: MovieFilters, genreMap: Map<number, string>): Promise<ListPaginationMovie> {
   // Construir la URL del endpoint /discover/movie de The Movie DB
   if (!apiKey) {
     throw new Error("apiKey not found");
   }
 
   // Obtener géneros de películas
-  return getMovieGenres()
-    .then((genresMap) => {
+ 
       // Realiza una solicitud HTTP GET utilizando fetch y retornar la promesa
       return fetch(`${url}?page=${filters.page}`, {
         method: "GET", // Método de solicitud
@@ -43,7 +42,7 @@ export function getMovies(filters: MovieFilters): Promise<ListPaginationMovie> {
         .then((data: ApiMovieList) => {
           // Transforma cada película en un objeto Movie usando formatMovie.
           const movies = data.results.map((movie: ApiMovieResult) =>
-            formatMovie(movie, genresMap)
+            formatMovie(movie, genreMap)
           );
           // Se extrae la información de paginación y se guarda en metaData.
           const metaData: Metadata = {
@@ -59,12 +58,9 @@ export function getMovies(filters: MovieFilters): Promise<ListPaginationMovie> {
           console.error("Error fetching movies:", error);
           throw error;
         });
-    })
-    .catch((error) => {
-      console.error("Error fetching movie genres:", error);
-      throw error;
-    });
-}
+    }
+    
+
 
 // Función para obtener géneros de películas
 export function getMovieGenres(): Promise<Map<number, string>> {
