@@ -49,3 +49,11 @@ export function formatGenresToMap(movieGenre: MovieGenres[]): Map<number, string
   return mapMovieGenres;
  
 }
+export function formatGenresToOptions(
+  movieGenres: MovieGenres[]
+): { value: string; label: string }[] {
+  return movieGenres.map((genre) => ({
+    value: genre.id.toString(),
+    label: genre.name,
+  }));
+}
