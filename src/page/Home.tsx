@@ -15,6 +15,7 @@ import ListPaginationList from "../models/ListPaginationMovie";
 import Pagination from "../components/Pagination";
 import NavBar from "../components/Navbar";
 import { useSearchParams } from "react-router-dom";
+import GenreList from "../models/GenreList";
 
 //app es un componente de tipo funcion de reactx
 //useState variable de react
@@ -24,7 +25,6 @@ const Home: React.FC = () => {
   //movieslistado, isloadingcontrola estado de carga loader, totalpagemovie nº paginas disponible, currenpage guarda pagina actual
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page");
-
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //es 0 porque no existe paginas inicialmente
@@ -54,8 +54,8 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getMovieGenres()
-      .then((data: Map<number, string>) => {
-        setGenres(data);
+      .then((data: GenreList) => {
+        setGenres(data.genreMap);
       })
       .catch((error) => {
         toast.error(error.message)
