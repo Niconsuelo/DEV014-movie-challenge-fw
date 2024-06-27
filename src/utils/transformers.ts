@@ -2,6 +2,7 @@
 //la transformacion de datos adapta datos recibidos de la API "ApiMovie" a otro mas conveniente Movie
 // Definición del modelo de negocio Movie
 import ApiMovieResult from "../models/ApiMovieResult";
+import GenresOptions from "../models/GenresOptions";
 import Movie from "../models/Movie";
 import MovieGenres from "../models/MovieGenres";
 
@@ -51,7 +52,7 @@ export function formatGenresToMap(movieGenre: MovieGenres[]): Map<number, string
 }
 export function formatGenresToOptions(
   movieGenres: MovieGenres[]
-): { value: string; label: string }[] {
+): GenresOptions[] {
   return movieGenres.map((genre) => ({
     value: genre.id.toString(),
     label: genre.name,
