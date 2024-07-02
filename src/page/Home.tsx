@@ -55,10 +55,12 @@ const Home: React.FC = () => {
   //CONSTRUCCION QUERYPARAMS
   //actualiza currentpage con nº de pagina seleccionado
   const SelectPageNumber = (numberPage: number) => {
-    // numberpage es pagina seleccionada
     setCurrentPageMovie(numberPage);
-    //Actualiza los parámetros de consulta en la URL con el nuevo número de página.
-    setSearchParams({ page: numberPage.toString() });
+    setSearchParams((queryParams) => {
+      const newParams = new URLSearchParams(queryParams);
+      newParams.set("page", numberPage.toString());
+      return newParams;
+    });
     console.log(`Prueba: Página seleccionada: ${numberPage}`);
   };
 
@@ -145,6 +147,15 @@ const Home: React.FC = () => {
     const value = e.target.value;
     const selectOption = genreOption.find((opt) => opt.value === value) || null;
     setOption(selectOption);
+    setSearchParams((queryParams) => {
+      const newParams = new URLSearchParams(queryParams);
+      if (selectOption) {
+        newParams.set("genreId", selectOption.value);
+      } else {
+        newParams.delete("genreId");
+      }
+      return newParams;
+    });
   };
 
   const onClickButton = () => {
@@ -152,6 +163,11 @@ const Home: React.FC = () => {
     setOption(null);
     setCurrentPageMovie(1);
     //option limpiarse al default null
+    setSearchParams((queryParams) => {
+      const newParams = new URLSearchParams(queryParams);
+      newParams.delete("genreId");
+      return newParams;
+    });
   };
 
   //obtiene seleccion, clickeada por el usuario
@@ -159,6 +175,15 @@ const Home: React.FC = () => {
     const valueSort = e.target.value;
     const selectionSort = selectOptionSort.find((sor) => sor.value === valueSort) || null;
     setSortBy(selectionSort);
+    setSearchParams((queryParams) => {
+      const newParams = new URLSearchParams(queryParams);
+      if (selectionSort) {
+        newParams.set("sortBy", selectionSort.value);
+      } else {
+        newParams.delete("sortBy");
+      }
+      return newParams;
+    });
   };
 
   //1. opciones para ascendente y descendente en nuestro componente.
