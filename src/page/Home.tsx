@@ -16,6 +16,7 @@ import Pagination from "../components/Pagination";
 import NavBar from "../components/Navbar";
 import { useSearchParams } from "react-router-dom";
 import GenreList from "../models/GenreList";
+import GenresOptions from "../models/GenresOptions";
 
 //app es un componente de tipo funcion de reactx
 //useState variable de react
@@ -37,7 +38,8 @@ const Home: React.FC = () => {
   //setsearchpaams actualiza parametro de consulta url
   const [firstLoad, setFirstLoad] = useState<boolean>(false);
   const [genres, setGenres] = useState<Map<number, string>>(new Map());
-
+  const [genreOption, setGenreOption] = useState<GenresOptions[]>([]);
+  const [option, setOption] = useState<GenresOptions | null>(null);
   //en el padre se hacen las funciones
   //en el hijo se llaman
   //en el padre se declara para que sea reactivo
@@ -56,9 +58,10 @@ const Home: React.FC = () => {
     getMovieGenres()
       .then((data: GenreList) => {
         setGenres(data.genreMap);
+        setGenreOption(data.genreOption);
       })
       .catch((error) => {
-        toast.error(error.message)
+        toast.error(error.message);
       });
   }, []);
 
@@ -71,8 +74,9 @@ const Home: React.FC = () => {
       setIsLoading(true);
 
       const id = toast.loading("Por favor espere...");
+     
 
-      getMovies({ page: currentPageMovie }, genres) // Llama a la API para obtener las películas de la página actual
+      getMovies({ page: currentPageMovie, genreId: Number(option?.value) }, genres) // Llama a la API para obtener las películas de la página actual
         .then((data: ListPaginationList) => {
           const movies = data.movies;
           setMovies(movies);
@@ -112,10 +116,23 @@ const Home: React.FC = () => {
     }
 
     // Dependencia en currentPageMovie asegura que getMovies se llama cada vez que cambia
-  }, [currentPageMovie, genres]);
+  }, [currentPageMovie, genres, option]);
 
   //onSelect toma un número como argumento y no retorna ningún valor (void).
   //pasar hSelectPageNumber como la prop onSelectPage al componente Pagination.
+
+  const OnChangeOption = (e: any) => {
+    const value = e.target.value;
+    const selectOption = genreOption.find((opt) => opt.value === value) || null;
+    setOption(selectOption);
+  };
+
+  const onClickButton = () => {
+   setOption(null)
+//1. limpiar filtros
+//option limpiarse al default null
+
+  };
 
   return (
     <div className="container-home">
@@ -123,7 +140,12 @@ const Home: React.FC = () => {
         descubre los clásicos de culto en{" "}
         <span className="h1-black">cinema paraíso</span>
       </h1>
-      <NavBar />
+      <NavBar
+        genreOptionProps={genreOption}
+        onChangeProps={OnChangeOption}
+        selectOption={option}
+        onClick={onClickButton}
+      />
       {/* <ModalDetailMovie/> */}
       {isLoading && <Loader />}
 

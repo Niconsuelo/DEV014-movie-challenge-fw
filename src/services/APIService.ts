@@ -20,6 +20,7 @@ const apiKey =
 const url = `${URL_API}/discover/movie`;
 const urlGenre = `${URL_API}/genre/movie/list`;
 
+
 // Función para obtener películas con filtros
 export function getMovies(
   filters: MovieFilters,
@@ -33,7 +34,7 @@ export function getMovies(
   // Obtener géneros de películas
 
   // Realiza una solicitud HTTP GET utilizando fetch y retornar la promesa
-  return fetch(`${url}?page=${filters.page}`, {
+  return fetch(`${url}?page=${filters.page}&with_genres=${filters.genreId}`, {
     method: "GET", // Método de solicitud
     headers: {
       "Content-Type": "application/json",
@@ -69,18 +70,8 @@ export function getMovies(
     });
 }
 
-// map number string eliminar
-//devolver un objeto: interface: genremap --> number string y genreÇOptions OK
-//return genresMap va a mostrar dos elementos: un objeto que contenga genremap y genreOption
-//home se obtienen los dos elementos
-
 // Función para obtener géneros de películas
-
-
-export function getMovieGenres(
- 
-): Promise<GenreList> {
-  
+export function getMovieGenres(): Promise<GenreList> {
   if (!apiKey) {
     throw new Error("apiKey not found");
   }
@@ -107,10 +98,11 @@ export function getMovieGenres(
       const genreOption = formatGenresToOptions(data.genres);
       const responseObject = {
         genreMap,
-        genreOption
-
-      }
-      return responseObject
+        genreOption,
+      };
+      console.log(genreOption);
+      console.log(genreMap)
+            return responseObject;
     })
     .catch((error) => {
       console.error("Error fetching genres:", error);
