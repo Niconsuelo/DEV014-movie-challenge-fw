@@ -12,6 +12,8 @@ interface NavBarProps {
   selectOption: GenresOptions | null;
   onClick: () => void;
   selectorSort: GenresOptions[];
+  OnChangeSortBy: (e: any) => void;
+  sortBy: GenresOptions | null;
 }
 
 const NavBar: React.FC<NavBarProps> = ({
@@ -20,6 +22,9 @@ const NavBar: React.FC<NavBarProps> = ({
   selectOption,
   onClick,
   selectorSort,
+ OnChangeSortBy,
+ sortBy,
+
 }) => {
   /* lo que pasara al hacer click en button del nav
   function handleClick() {
@@ -38,8 +43,8 @@ const NavBar: React.FC<NavBarProps> = ({
       />
       <ListOptions
         options={selectorSort}
-        onChangeOption={onChangeProps}
-        selected={selectOption}
+        onChangeOption={OnChangeSortBy}
+        selected={sortBy}
         name="Ordenar Por"
       />
       <ButtonNav text="Limpiar filtros" onClick={onClick} />

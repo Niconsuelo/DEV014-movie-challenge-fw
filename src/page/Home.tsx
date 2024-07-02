@@ -47,6 +47,7 @@ const Home: React.FC = () => {
   const [genres, setGenres] = useState<Map<number, string>>(new Map());
   const [genreOption, setGenreOption] = useState<GenresOptions[]>([]);
   const [option, setOption] = useState<GenresOptions | null>(null);
+  const [sortBy, setSortBy] = useState<GenresOptions | null>(null);
   //en el padre se hacen las funciones
   //en el hijo se llaman
   //en el padre se declara para que sea reactivo
@@ -83,7 +84,13 @@ const Home: React.FC = () => {
       const id = toast.loading("Por favor espere...");
 
       getMovies(
-        { page: currentPageMovie, genreId: Number(option?.value || -1) },
+        //filtros de getMovie
+        //numero pagina actual
+        { page: currentPageMovie, 
+          //si option es null o undefined, se usa -1
+          genreId: Number(option?.value || -1), 
+          //si ortby tiene valor, pasa a la api, si es nulo queda igual
+          sortBy: sortBy ? sortBy.value : null},
         genres
       ) // Llama a la API para obtener las películas de la página actual
         .then((data: ListPaginationList) => {
@@ -127,7 +134,7 @@ const Home: React.FC = () => {
     }
 
     // Dependencia en currentPageMovie asegura que getMovies se llama cada vez que cambia
-  }, [currentPageMovie, genres, option]);
+  }, [currentPageMovie, genres, option, sortBy]);
 
   //onSelect toma un número como argumento y no retorna ningún valor (void).
   //pasar hSelectPageNumber como la prop onSelectPage al componente Pagination.
@@ -147,6 +154,13 @@ const Home: React.FC = () => {
     //option limpiarse al default null
   };
 
+  //obtiene seleccion, clickeada por el usuario
+  const OnChangeSort = (e: any) => {
+    const valueSort = e.target.value;
+    const selectionSort = selectOptionSort.find((sor) => sor.value === valueSort) || null;
+    setSortBy(selectionSort);
+  };
+
   //1. opciones para ascendente y descendente en nuestro componente.
   //2. manejar estado de orden: ordenamiento seleccionado (ascendente o descendente).
   //3. aplicar ordenado: ordenar las películas según el título en la dirección adecuada.
@@ -163,6 +177,8 @@ const Home: React.FC = () => {
         selectOption={option}
         onClick={onClickButton}
         selectorSort={selectOptionSort}
+        sortBy={sortBy}
+        OnChangeSortBy={OnChangeSort}
       />
       {/* <ModalDetailMovie/> */}
       {isLoading && <Loader />}
