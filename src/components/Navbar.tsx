@@ -35,11 +35,7 @@ const NavBar: React.FC<NavBarProps> = ({
         selected={selectOption}
       />
      
-      <ListOptions
-        options={genreOptionProps}
-        onChangeOption={onChangeProps}
-        selected={selectOption}
-      />
+      
       <ButtonNav text="Ir al inicio" onClick={onClick} />
       <ButtonNav text="Mejor puntuación" onClick={onClick}/>
       <ButtonSearch />

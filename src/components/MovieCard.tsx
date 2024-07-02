@@ -11,6 +11,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
 // Convertir release_date a un objeto Date y obtener el año
 const releaseYear = new Date(movie.release_date).getFullYear();
+const genresString = movie.genres.join(', ');
 
   return (
     <li className="container-card-movie">
@@ -19,7 +20,7 @@ const releaseYear = new Date(movie.release_date).getFullYear();
       </div>
       <div className="text-card-movie">
         <p className="text-card-title">{movie.original_title}</p>
-        <p className="text-card-genres">{movie.genres}</p>
+        <p className="text-card-genres">{genresString}</p>
         <p className="text-card-year">{releaseYear}</p>
       </div>
     </li>
