@@ -30,7 +30,7 @@ export function getMovies(
     throw new Error("apiKey not found");
   }
   let urlGenreId = `${url}?page=${filters.page}`;
-
+  //hacemos esto para evitar obtener peliculas que no tengan generos
   //almacena las keys concatenadas.
   let stringKey = "";
   //recorrer el Map para transformar key en cadena de string
@@ -41,9 +41,10 @@ export function getMovies(
   });
   //elimina la última coma y el espacio sobrantes usando slice.
   stringKey = stringKey.slice(0, -2);
-  console.log(stringKey);
+  //console.log(stringKey); genres numeros
 
   //si no es igual a -1 seria igual a otro numero
+  //muestra generos por numero
   if (filters.genreId !== -1) {
     //se debe ejecutar el fetch
     urlGenreId = urlGenreId + `&with_genres=${filters.genreId}`;
@@ -52,10 +53,11 @@ export function getMovies(
   }
 
   //todas las peliculas, deben ordenarse
-  if (filters.sortBy !== null) {
-    urlGenreId = urlGenreId + `&sort_by=title.asc`;
-  } else {
+  if (filters.sortBy) {
+    urlGenreId = urlGenreId + `&sort_by=${filters.sortBy}`;
+    console.log(filters.sortBy)
   }
+
 
   //console.log(filters.genreId);
   // Realiza una solicitud HTTP GET utilizando fetch y retornar la promesa
@@ -119,7 +121,6 @@ export function getMovieGenres(): Promise<GenreList> {
     })
     .then((data: ApiMovieGenres) => {
       // Transforma la lista de géneros en un Map
-
       const genreMap = formatGenresToMap(data.genres);
       const genreOption = formatGenresToOptions(data.genres);
       const responseObject = {
