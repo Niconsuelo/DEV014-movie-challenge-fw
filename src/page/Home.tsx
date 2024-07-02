@@ -76,7 +76,7 @@ const Home: React.FC = () => {
       const id = toast.loading("Por favor espere...");
      
 
-      getMovies({ page: currentPageMovie, genreId: Number(option?.value) }, genres) // Llama a la API para obtener las películas de la página actual
+      getMovies({ page: currentPageMovie, genreId: Number(option?.value || -1) }, genres) // Llama a la API para obtener las películas de la página actual
         .then((data: ListPaginationList) => {
           const movies = data.movies;
           setMovies(movies);

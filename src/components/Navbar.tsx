@@ -1,9 +1,10 @@
 import React from "react";
-import Button from "./ButtonNav";
+import ButtonNav from "./ButtonNav";
 import "../styles/ButtonNav.css";
 import ButtonSearch from "./ButtonSearch";
 import ListOptions from "../components/ListOptions";
 import GenresOptions from "../models/GenresOptions";
+import "../styles/NavBar.css";
 
 interface NavBarProps {
   genreOptionProps: GenresOptions[];
@@ -26,19 +27,21 @@ const NavBar: React.FC<NavBarProps> = ({
 
   return (
     <div className="container-nav-bar">
-      <Button text="Ir al Inicio" onClick={onClick} />
+      
 
       <ListOptions
         options={genreOptionProps}
         onChangeOption={onChangeProps}
         selected={selectOption}
       />
-      <Button text="Button 2" onClick={onClick} />
+     
       <ListOptions
         options={genreOptionProps}
         onChangeOption={onChangeProps}
         selected={selectOption}
       />
+      <ButtonNav text="Ir al inicio" onClick={onClick} />
+      <ButtonNav text="Mejor puntuación" onClick={onClick}/>
       <ButtonSearch />
     </div>
   );

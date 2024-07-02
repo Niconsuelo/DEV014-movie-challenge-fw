@@ -9,7 +9,7 @@ interface ButtonProps {
 
 }
 //componente react button
-const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
+const ButtonNav: React.FC<ButtonProps> = ({ text, onClick }) => {
   return (
       <div className="container-button">
         <button 
@@ -21,4 +21,4 @@ const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
   );
 };
 
-export default Button;
+export default ButtonNav;
