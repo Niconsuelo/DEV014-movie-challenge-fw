@@ -41,7 +41,7 @@ export function getMovies(
   });
   //elimina la última coma y el espacio sobrantes usando slice.
   stringKey = stringKey.slice(0, -2);
-  console.log(stringKey)
+  console.log(stringKey);
 
   //si no es igual a -1 seria igual a otro numero
   if (filters.genreId !== -1) {
@@ -51,12 +51,10 @@ export function getMovies(
     urlGenreId = urlGenreId + `&with_genres=${stringKey}`;
   }
 
-  //let urlSortBy = `${url}?page=${filters.page} &sort_by=original_title.asc&&with_genres=${filters.genreId}`
   //todas las peliculas, deben ordenarse
   if (filters.sortBy !== null) {
     urlGenreId = urlGenreId + `&sort_by=title.asc`;
   } else {
-    urlGenreId = urlGenreId + `&sort_by=title.desc`;
   }
 
   //console.log(filters.genreId);
@@ -81,6 +79,7 @@ export function getMovies(
       const movies = data.results.map((movie: ApiMovieResult) =>
         formatMovie(movie, genreMap)
       );
+
       // Se extrae la información de paginación y se guarda en metaData.
       const metaData: Metadata = {
         pagination: {

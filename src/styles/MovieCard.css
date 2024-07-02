@@ -6,6 +6,7 @@
   border-radius: 10px;
   width: 200px;
 }
+
 .movie-image {
   width: 140px; /* Ancho completo del póster */
   height: 200px; /* Altura automática para mantener la proporción */

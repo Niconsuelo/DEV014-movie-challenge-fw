@@ -18,10 +18,17 @@ import { useSearchParams } from "react-router-dom";
 import GenreList from "../models/GenreList";
 import GenresOptions from "../models/GenresOptions";
 
-//app es un componente de tipo funcion de reactx
-//useState variable de react
-//set cambia asignar.
 const Home: React.FC = () => {
+  const selectOptionSort: GenresOptions[] = [
+    {
+      label: "Asc",
+      value: "title.asc",
+    },
+    {
+      label: "Desc",
+      value: "title.desc",
+    },
+  ];
   //definicion, manejo de estado del componente
   //movieslistado, isloadingcontrola estado de carga loader, totalpagemovie nº paginas disponible, currenpage guarda pagina actual
   const [searchParams, setSearchParams] = useSearchParams();
@@ -74,16 +81,20 @@ const Home: React.FC = () => {
       setIsLoading(true);
 
       const id = toast.loading("Por favor espere...");
-     
 
-      getMovies({ page: currentPageMovie, genreId: Number(option?.value || -1), }, genres) // Llama a la API para obtener las películas de la página actual
+      getMovies(
+        { page: currentPageMovie, genreId: Number(option?.value || -1) },
+        genres
+      ) // Llama a la API para obtener las películas de la página actual
         .then((data: ListPaginationList) => {
           const movies = data.movies;
           setMovies(movies);
+
           //despues de setear peliculas,
-          //busca total page y con ello sera reactivo, asara al hijo pagination que cambiara
+          //busca total page y con ello sera reactivo, pasara al hijo pagination que cambiara
           //setTotalPageMovie(data.metaData.pagination.totalPages);
           //al ingresar los datos que me entrega promise, me trae 5400 paginas.
+          setMovies(movies);
           setTotalPageMovie(10); // Establece el número total de páginas (aquí está fijo a 10 para el ejemplo)
 
           if (firstLoad === false) {
@@ -121,18 +132,24 @@ const Home: React.FC = () => {
   //onSelect toma un número como argumento y no retorna ningún valor (void).
   //pasar hSelectPageNumber como la prop onSelectPage al componente Pagination.
 
+  //verificar la seleccion de usuario con API.
   const OnChangeOption = (e: any) => {
+    //valor seleccionado por el usuario
     const value = e.target.value;
     const selectOption = genreOption.find((opt) => opt.value === value) || null;
     setOption(selectOption);
   };
 
   const onClickButton = () => {
-   setOption(null)
-//1. limpiar filtros
-//option limpiarse al default null
-
+    //Asegurar que al limpiar el filtro, se vuelva a la página 1
+    setOption(null);
+    setCurrentPageMovie(1);
+    //option limpiarse al default null
   };
+
+  //1. opciones para ascendente y descendente en nuestro componente.
+  //2. manejar estado de orden: ordenamiento seleccionado (ascendente o descendente).
+  //3. aplicar ordenado: ordenar las películas según el título en la dirección adecuada.
 
   return (
     <div className="container-home">
@@ -145,6 +162,7 @@ const Home: React.FC = () => {
         onChangeProps={OnChangeOption}
         selectOption={option}
         onClick={onClickButton}
+        selectorSort={selectOptionSort}
       />
       {/* <ModalDetailMovie/> */}
       {isLoading && <Loader />}
