@@ -7,12 +7,15 @@ interface OptionProps {
   options: GenresOptions[];
   selected: GenresOptions | null;
   onChangeOption: (e: any) => void;
+  name: string
 }
 
 const SelectComponent: React.FC<OptionProps> = ({
   options,
   selected,
   onChangeOption,
+  name
+ 
 }) => {
 
   return (
@@ -28,7 +31,7 @@ const SelectComponent: React.FC<OptionProps> = ({
         onChange={onChangeOption}
       >
         <option value="" disabled>
-          Select option
+          {name}
         </option>
 
         {options.map((option) => (

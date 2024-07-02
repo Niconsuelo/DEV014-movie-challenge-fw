@@ -10,7 +10,8 @@ interface NavBarProps {
   genreOptionProps: GenresOptions[];
   onChangeProps: (e: any) => void;
   selectOption: GenresOptions | null;
-onClick: () => void;
+  onClick: () => void;
+  selectorSort: GenresOptions[];
 }
 
 const NavBar: React.FC<NavBarProps> = ({
@@ -18,6 +19,7 @@ const NavBar: React.FC<NavBarProps> = ({
   onChangeProps,
   selectOption,
   onClick,
+  selectorSort,
 }) => {
   /* lo que pasara al hacer click en button del nav
   function handleClick() {
@@ -27,17 +29,20 @@ const NavBar: React.FC<NavBarProps> = ({
 
   return (
     <div className="container-nav-bar">
-      
-
+      <ButtonNav text="Ir al inicio" onClick={onClick} />
       <ListOptions
         options={genreOptionProps}
         onChangeOption={onChangeProps}
         selected={selectOption}
+        name="Generos"
       />
-     
-      
-      <ButtonNav text="Ir al inicio" onClick={onClick} />
-      <ButtonNav text="Mejor puntuación" onClick={onClick}/>
+      <ListOptions
+        options={selectorSort}
+        onChangeOption={onChangeProps}
+        selected={selectOption}
+        name="Ordenar Por"
+      />
+      <ButtonNav text="Limpiar filtros" onClick={onClick} />
       <ButtonSearch />
     </div>
   );
