@@ -20,7 +20,6 @@ const apiKey =
 const url = `${URL_API}/discover/movie`;
 const urlGenre = `${URL_API}/genre/movie/list`;
 
-
 // Función para obtener películas con filtros
 export function getMovies(
   filters: MovieFilters,
@@ -30,12 +29,17 @@ export function getMovies(
   if (!apiKey) {
     throw new Error("apiKey not found");
   }
+  let urlMovies = `${url}?page=${filters.page}`;
 
-  // Obtener géneros de películas
-
+  //si no es igual a -1 seria igual a otro numero
+  if (filters.genreId !== -1) {
+    //se debe ejecutar el fetch
+    urlMovies = urlMovies + `&with_genres=${filters.genreId}`;
+  }
+  //console.log(filters.genreId);
   // Realiza una solicitud HTTP GET utilizando fetch y retornar la promesa
-  return fetch(`${url}?page=${filters.page}&with_genres=${filters.genreId}`, {
-    method: "GET", // Método de solicitud
+  return fetch(urlMovies, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`, // Ejemplo de header de autorización
@@ -101,8 +105,8 @@ export function getMovieGenres(): Promise<GenreList> {
         genreOption,
       };
       console.log(genreOption);
-      console.log(genreMap)
-            return responseObject;
+      console.log(genreMap);
+      return responseObject;
     })
     .catch((error) => {
       console.error("Error fetching genres:", error);
