@@ -29,16 +29,39 @@ export function getMovies(
   if (!apiKey) {
     throw new Error("apiKey not found");
   }
-  let urlMovies = `${url}?page=${filters.page}`;
+  let urlGenreId = `${url}?page=${filters.page}`;
+
+  //almacena las keys concatenadas.
+  let stringKey = "";
+  //recorrer el Map para transformar key en cadena de string
+  genreMap.forEach((_, key) => {
+    //concatena cada key a stringKey, seguida de una coma y un espacio.
+    stringKey += `${key}||`;
+    //console.log(`${value}`);
+  });
+  //elimina la última coma y el espacio sobrantes usando slice.
+  stringKey = stringKey.slice(0, -2);
+  console.log(stringKey)
 
   //si no es igual a -1 seria igual a otro numero
   if (filters.genreId !== -1) {
     //se debe ejecutar el fetch
-    urlMovies = urlMovies + `&with_genres=${filters.genreId}`;
+    urlGenreId = urlGenreId + `&with_genres=${filters.genreId}`;
+  } else {
+    urlGenreId = urlGenreId + `&with_genres=${stringKey}`;
   }
+
+  //let urlSortBy = `${url}?page=${filters.page} &sort_by=original_title.asc&&with_genres=${filters.genreId}`
+  //todas las peliculas, deben ordenarse
+  if (filters.sortBy !== null) {
+    urlGenreId = urlGenreId + `&sort_by=title.asc`;
+  } else {
+    urlGenreId = urlGenreId + `&sort_by=title.desc`;
+  }
+
   //console.log(filters.genreId);
   // Realiza una solicitud HTTP GET utilizando fetch y retornar la promesa
-  return fetch(urlMovies, {
+  return fetch(urlGenreId, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
