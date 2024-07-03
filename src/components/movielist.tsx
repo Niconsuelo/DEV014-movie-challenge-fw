@@ -6,11 +6,12 @@ movies: Movie[]
 }
 
 const MovieList: React.FC<MovieListProps> = ({ movies }) => {
+ 
 
   return (
     <ul  className="container-list-movie">
       {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie}/>
+        <MovieCard key={movie.id} movie={movie} />
       ))}
     </ul>
   );

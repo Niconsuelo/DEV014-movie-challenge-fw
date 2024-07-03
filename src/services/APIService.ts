@@ -12,6 +12,7 @@ import Metadata from "../models/MetaData";
 import getMovieGenres from "../models/MovieGenres";
 import ApiMovieGenres from "../models/ApiMovieGenres";
 import GenreList from "../models/GenreList";
+import Movie from "../models/Movie";
 
 // Constantes
 const URL_API = "https://api.themoviedb.org/3";
@@ -19,6 +20,7 @@ const apiKey =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGNjOTZmMTllNzJiYTgxY2UxNWMxMWRkOWJkZjMxYiIsInN1YiI6IjY2NGNkYTI4YThhNThkY2I3YTZlYjIwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bY82hbPJncqfBkEZaG4ZifQPcyUFrYLk-QpIyaKg6Oc";
 const url = `${URL_API}/discover/movie`;
 const urlGenre = `${URL_API}/genre/movie/list`;
+
 
 // Función para obtener películas con filtros
 export function getMovies(
@@ -136,3 +138,34 @@ export function getMovieGenres(): Promise<GenreList> {
       throw error;
     });
 }
+
+
+export function getMovieDetail(id: number, genreMap: Map<number, string>): Promise<Movie> {
+  if (!apiKey) {
+    throw new Error("apiKey not found");
+  }
+  return fetch(`https://api.themoviedb.org/3/movie/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(
+        "Lo sentimos, pero no pudimos cargar la página. Intenta nuevamente más tarde"
+      );
+    }
+    return response.json();
+  })
+  .then((apiMovie: ApiMovieResult) => {
+    // Pasar genreMap a formatMovie
+    return formatMovie(apiMovie, genreMap);
+  })
+  .catch((error) => {
+    console.error("Error fetching movie details:", error);
+    throw error;
+  });
+}
+

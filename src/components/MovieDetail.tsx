@@ -1,29 +1,21 @@
-import React, { useState } from "react";
-import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
-import "../styles/ModalDetailMovie.css";
+import React from "react";
 import Movie from "../models/Movie";
+import "../styles/MovieDetail.css";
 
-interface ModalDetailMovieProps {
+interface MovieDetailProps {
   movie: Movie;
 }
 
-const ModalDetailMovie: React.FC<ModalDetailMovieProps> = ({ movie }) => {
+const MovieDetail: React.FC<MovieDetailProps> = ({ movie }) => {
   const base_url = "https://image.tmdb.org/t/p/w500/";
   const fullImageUrl = `${base_url}${movie.poster_path}`;
-  const [open, setOpen] = useState(false);
-
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
 
   return (
     <div>
-      <button onClick={onOpenModal}>Open modal</button>
-
-      <Modal open={open} onClose={onCloseModal} center>
+      <div className="container-detail">
         <div className="container-movie-details">
           <div className="container-movie-image">
-            <img className="img-movie-details" src={fullImageUrl} />
+            <img className="img-movie-details" src={fullImageUrl} alt={movie.title}/>
           </div>
 
           <div className="container-movie-text">
@@ -39,22 +31,15 @@ const ModalDetailMovie: React.FC<ModalDetailMovieProps> = ({ movie }) => {
               </div>
 
               <div className="align-movie-details">
-                <h3>Genres:</h3>
-                <p className="text-movie-details">{movie.genre_ids}</p>
-              </div>
-
-              <div className="align-movie-details">
                 <h3>Overview:</h3>
-                <p className="text-movie-details">
-                {movie.overview}
-                </p>
+                <p className="text-movie-details">{movie.overview}</p>
               </div>
             </div>
           </div>
         </div>
-      </Modal>
+      </div>
     </div>
   );
 };
 
-export default ModalDetailMovie;
+export default MovieDetail;

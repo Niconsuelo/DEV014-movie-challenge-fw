@@ -22,11 +22,21 @@ const Pagination: React.FC<PaginationProps> = ({
   totalPage,
   onSelectPage,
 }) => {
+  let limitPage = 10;
   // Crear un array para almacenar los botones de paginación
   const pageButtons = [];
+  let initPage = 1;
+
+  if(currentPage > limitPage) {
+    initPage = currentPage - limitPage + 1
+    limitPage = currentPage + 1;
+  }
+  if(currentPage === totalPage) {
+    limitPage = totalPage
+  }
 
   // bucle for para generar los botones
-  for (let i = 1; i <= totalPage; i++) {
+  for (let i = initPage; i <= limitPage; i++) {
     pageButtons.push(
       <button
         //número de página como texto del botón {i}.

@@ -1,57 +1,59 @@
-.container-movie-details{
+.container-detail {
+  margin: 70px 350px 70px 350px;
+}
+.container-movie-details {
   display: flex;
-  background-color: #1f0f1a;
-  color: #FFFFFF;
+  background-color: #200e1a;
+  color: #ffffff;
   flex-direction: row;
-  height: 513px;
-  width: 815px;
+  height: 528px;
+  width: 835px;
   align-items: center;
   justify-content: center;
-
+  border-radius: 15px;
 }
-.title-movie-details{
+.title-movie-details {
   text-transform: uppercase;
   font-size: xx-large;
   margin: 4px 6px px -2px;
 }
 
-.text-movie-details{
+.text-movie-details {
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.607);
   opacity: 0.5;
-
   text-align: justify; /* Justificar el texto */
   word-wrap: break-word; /* Permite que las palabras largas se dividan y envuelvan a la siguiente línea */
   overflow-wrap: break-word; /* Lo mismo que word-wrap, más compatible */
-  hyphens: auto; 
+  hyphens: auto;
 }
 
-.align-movie-details{
+.align-movie-details {
   line-height: 20px;
 }
-.align-title{
+.align-title {
   line-height: 6px;
   padding: 0px 0px 10px auto;
 }
 
-.img-movie-details{
+.img-movie-details {
   height: 288px;
-  width: 242px;
-  object-fit: cover;
+  width: 219px;
   margin: 35px 0px 35px 35px;
   border-radius: 10px;
+  object-fit: cover;
 }
-.react-responsive-modal-modal{
+.react-responsive-modal-modal {
   padding: 0px;
   border-radius: 10px;
   margin: 10px 10px 10px 10px;
 }
 
-.container-movie-text{
-  margin: 41px 44px 38px 43px;
+.container-movie-text {
+  margin: 30px 44px 38px 43px;
 }
 
-.container-details{
+.container-details {
   margin: 41px 0px 0px 0px;
 }
 .react-responsive-modal-closeButton {
