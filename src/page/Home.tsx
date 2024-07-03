@@ -135,10 +135,11 @@ const Home: React.FC = () => {
     }
 
     // Dependencia en currentPageMovie asegura que getMovies se llama cada vez que cambia
+    // eslint-disable-next-line
   }, [currentPageMovie, genres, option, sortBy]);
 
   //verificar la seleccion de usuario con API.
-  const OnChangeOption = (e: any) => {
+  const OnChangeOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
     //valor seleccionado por el usuario
     const value = e.target.value;
     const selectOption = genreOption.find((opt) => opt.value === value) || null;
@@ -170,7 +171,7 @@ const Home: React.FC = () => {
   };
 
   //obtiene seleccion, clickeada por el usuario
-  const OnChangeSort = (e: any) => {
+  const OnChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const valueSort = e.target.value;
     const selectionSort =
       selectOptionSort.find((sor) => sor.value === valueSort) || null;

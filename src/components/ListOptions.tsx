@@ -6,7 +6,7 @@ import GenresOptions from "../models/GenresOptions";
 interface OptionProps {
   options: GenresOptions[];
   selected: GenresOptions | null;
-  onChangeOption: (e: any) => void;
+  onChangeOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   name: string
 }
 

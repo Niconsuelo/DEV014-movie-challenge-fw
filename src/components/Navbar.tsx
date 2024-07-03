@@ -1,18 +1,17 @@
 import React from "react";
 import ButtonNav from "./ButtonNav";
 import "../styles/ButtonNav.css";
-import ButtonSearch from "./ButtonSearch";
 import ListOptions from "../components/ListOptions";
 import GenresOptions from "../models/GenresOptions";
 import "../styles/NavBar.css";
 
 interface NavBarProps {
   genreOptionProps: GenresOptions[];
-  onChangeProps: (e: any) => void;
+  onChangeProps: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   selectOption: GenresOptions | null;
   onClick: () => void;
   selectorSort: GenresOptions[];
-  OnChangeSortBy: (e: any) => void;
+  OnChangeSortBy: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   sortBy: GenresOptions | null;
 }
 
@@ -48,7 +47,7 @@ const NavBar: React.FC<NavBarProps> = ({
         name="Ordenar Por"
       />
       <ButtonNav text="Limpiar filtros" onClick={onClick} />
-      <ButtonSearch />
+   
     </div>
   );
 };
