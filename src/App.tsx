@@ -5,8 +5,11 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../src/page/Home";
 import { ToastContainer } from "react-toastify";
+import PageMovieDetails from "./page/PageMovieDetails";
+
 
 //app es un componente de tipo funcion de reactx
+
 const App: React.FC = () => {
   return (
     <>
@@ -21,6 +24,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/movie/:id" element={<PageMovieDetails />} />
         </Routes>
       </BrowserRouter>
     </>

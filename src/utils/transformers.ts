@@ -33,11 +33,18 @@ export function formatMovie(apiMovie: ApiMovieResult, genreMap: Map<number, stri
     vote_average: apiMovie.vote_average,
     vote_count: apiMovie.vote_count,
     genres: [],
+
   };
-
-  // Mapear genre_ids a nombres de géneros usando genreMap
-  movie.genres = apiMovie.genre_ids.map(id => genreMap.get(id)).filter(Boolean) as string[];
-
+//verifica que genreMap no sea undefined
+//estén presentes y definidas antes de continuar 
+  if (apiMovie.genre_ids && genreMap) {
+  // arreglo de números que representan los IDs de género de la película.
+  // itera sobre cada ID, busca en el Map de genreMap el nombre correspondiente al ID de género (id).
+  //filter. elimina cualquier undefined del arreglo.
+  //as asegura que sea string
+  movie.genres = apiMovie.genre_ids.map(id => genreMap.get(id)).filter(Boolean) as string[];  
+}
+//devuelve un arreglo de nombres de géneros o undefined si el id no existe en genreMap.
   return movie;
 }
 
