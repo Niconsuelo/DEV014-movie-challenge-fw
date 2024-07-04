@@ -1,27 +1,57 @@
-import '@testing-library/jest-dom'
-import { render, screen } from "@testing-library/react";
-import MovieCard from "../components/MovieCard"; // Ajusta la ruta según la ubicación de tu archivo
+import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import Movie from '../models/Movie';
+import MovieCard from '../components/MovieCard';
 
-const mockMovieCard = {
+const mockMovie: Movie = {
   adult: false,
-  backdrop_path: "/backdrop.jpg",
-  genre_ids: [1, 2, 3],
-  id: 123,
+  backdrop_path: "/path/to/backdrop.jpg",
+  genres: ["Action", "Adventure"],
+  genre_ids: [28, 12],
+  id: 12345,
   original_language: "en",
   original_title: "Test Movie",
-  overview: "This is a test movie",
-  popularity: 123.45,
-  poster_path: "/poster.jpg",
-  release_date: "2023-01-01",
+  overview: "This is a test movie.",
+  popularity: 10,
+  poster_path: "/path/to/poster.jpg",
+  release_date: "2022-01-01",
   title: "Test Movie",
   video: false,
-  vote_average: 4.5,
-  vote_count: 100,
+  vote_average: 8.5,
+  vote_count: 1000,
 };
-test("MovieCard renders movie title and release date", () => {
-  render(<MovieCard movie={mockMovieCard} />);
-  //screen ofrece un conjunto de métodos que te permiten buscar elementos específicos dentro del componente renderizado. 
-expect(screen.getByText(mockMovieCard.original_title)).toBeInTheDocument();
-expect(screen.getByText(mockMovieCard.release_date)).toBeInTheDocument();
-});
 
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
+}));
+
+describe('MovieCard Component', () => {
+  test('test_movie_card_navigation', () => {
+    render(
+      <MemoryRouter>
+        <MovieCard movie={mockMovie} />
+      </MemoryRouter>
+    );
+
+    const movieCard = screen.getByRole('listitem');
+    fireEvent.click(movieCard);
+
+    expect(mockNavigate).toHaveBeenCalledWith(`/movie/${mockMovie.id}`);
+  });
+
+  test('test_movie_card_missing_poster_path', () => {
+    const movieWithoutPoster = { ...mockMovie, poster_path: '' };
+  
+    render(
+      <MemoryRouter>
+        <MovieCard movie={movieWithoutPoster} />
+      </MemoryRouter>
+    );
+  
+    const imageElement = screen.getByRole('img');
+    expect(imageElement.getAttribute('src')).toBe('https://image.tmdb.org/t/p/w500/');
+  })
+});
