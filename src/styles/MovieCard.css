@@ -2,16 +2,16 @@
   list-style-type: none;
 }
 .container-card-image-movie {
-  background-color: rgba(255, 255, 255, 0.607);
   border-radius: 10px;
   width: 200px;
 }
 
 .movie-image {
-  width: 140px; /* Ancho completo del póster */
-  height: 200px; /* Altura automática para mantener la proporción */
+  width: 175px; /* Ancho completo del póster */
+  height: 224px; /* Altura automática para mantener la proporción */
   margin-left: 30px;
   margin-bottom: -4px;
+  border-radius: 10px;
 }
 
 .text-card-movie {
@@ -32,8 +32,8 @@
   font-size: large;
   color: beige;
   line-height: 1em;
-  font-size:medium;
-  margin: 10px 0px 0px 0px;
+  font-size: medium;
+  margin: 10px 0px 0px 21px;
   text-align: center;
 }
 
@@ -41,11 +41,14 @@
   font-size: small;
   opacity: 0.5;
   color: #fff;
+  margin: 10px 0px 0px 23px;
 }
-.text-card-genres{
+.text-card-genres {
   letter-spacing: 0.1em;
   font-size: small;
   opacity: 0.5;
   color: #fff;
   line-height: 15px;
+  text-align: center;
+  margin: 10px 0px 0px 23px;
 }
