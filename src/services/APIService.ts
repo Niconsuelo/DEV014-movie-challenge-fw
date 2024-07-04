@@ -9,7 +9,6 @@ import {
 import { MovieFilters } from "../models/MovieFilters";
 import ListPaginationMovie from "../models/ListPaginationMovie";
 import Metadata from "../models/MetaData";
-import getMovieGenres from "../models/MovieGenres";
 import ApiMovieGenres from "../models/ApiMovieGenres";
 import GenreList from "../models/GenreList";
 import Movie from "../models/Movie";
@@ -57,7 +56,6 @@ export function getMovies(
   //todas las peliculas, deben ordenarse
   if (filters.sortBy) {
     urlGenreId = urlGenreId + `&sort_by=${filters.sortBy}`;
-    console.log(filters.sortBy)
   }
 
 

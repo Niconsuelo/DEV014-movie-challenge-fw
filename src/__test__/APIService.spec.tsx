@@ -1,64 +1,205 @@
-import '@testing-library/jest-dom';
-import { render, waitFor, screen } from '@testing-library/react';
-import Home from '../page/Home';
-import { getMovies } from '../services/APIService';
+import fetchMock from "jest-fetch-mock";
+import type { MovieFilters } from "../models/MovieFilters";
+import {
+  getMovieDetail,
+  getMovieGenres,
+  getMovies,
+} from "../services/APIService";
+import { ListPaginationMovie } from "../models/ListPaginationMovie";
+import ApiMovieResult from "../models/ApiMovieResult";
+import ApiMovieGenres from "../models/ApiMovieGenres";
+import GenreList from "../models/GenreList";
+import { formatMovie } from "../utils/transformers";
+import Movie from "../models/Movie";
 
-// Simulamos las respuestas de la API utilizando Jest mocks
-jest.mock('../services/APIService');
+//test getMovies
+describe("getMovies", () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
 
-describe('Pruebas de integración para el componente Home', () => {
-  // Simulamos datos de películas
-  const mockMovies = [
-    {
-      adult: false,
-      backdrop_path: '/backdrop.jpg',
-      genre_ids: [1, 2, 3],
-      id: 123,
-      original_language: 'en',
-      original_title: 'Test Movie',
-      overview: 'This is a test movie',
-      popularity: 123.45,
-      poster_path: '/poster.jpg',
-      release_date: '2023-01-01',
-      title: 'Test Movie',
-      video: false,
-      vote_average: 4.5,
-      vote_count: 100,
-    },
-    {
-      adult: false,
-      backdrop_path: '/fY3lD0jM5AoHJMunjGWqJ0hRteI.jpg',
-      genre_ids: [878, 27, 28],
-      id: 940721,
-      original_language: 'ja',
-      original_title: 'ゴジラ-1.0',
-      overview:
-        'In postwar Japan, Godzilla brings new devastation to an already scorched landscape. With no military intervention or government help in sight, the survivors must join together in the face of despair and fight back against an unrelenting horror.',
-      popularity: 1408.634,
-      poster_path: '/hkxxMIGaiCTmrEArK7J56JTKUlB.jpg',
-      release_date: '2023-11-03',
-      title: 'Godzilla Minus One',
-      video: false,
-      vote_average: 7.7,
-      vote_count: 1355,
-    },
-  ];
+  const genreMap = new Map<number, string>([
+    [28, "Action"],
+    [12, "Adventure"],
+  ]);
+
+  const apiMovieResult: ApiMovieResult = {
+    adult: false,
+    backdrop_path: "/path.jpg",
+    genre_ids: [28, 12],
+    id: 1,
+    original_language: "en",
+    original_title: "Test Movie",
+    overview: "Test overview",
+    popularity: 10,
+    poster_path: "/poster.jpg",
+    release_date: "2023-01-01",
+    title: "Test Movie",
+    video: false,
+    vote_average: 8,
+    vote_count: 100,
+  };
+
+  const apiMovieList = {
+    page: 1,
+    results: [apiMovieResult],
+    total_pages: 1,
+    total_results: 1,
+  };
+
+  // Testing getMovies with valid filters and different genreId
+  test("test_getMovies_with_different_genreId", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(apiMovieList));
+
+    const filters: MovieFilters = {
+      page: 1,
+      genreId: 12,
+      sortBy: "popularity.desc",
+    };
+    const result: ListPaginationMovie = await getMovies(filters, genreMap);
+
+    expect(result.metaData.pagination.currentPage).toBe(1);
+    expect(result.metaData.pagination.totalPages).toBe(1);
+    expect(result.movies.length).toBe(1);
+    expect(result.movies[0].title).toBe("Test Movie");
+    expect(result.movies[0].genres).toEqual(["Action", "Adventure"]);
+  });
+
+  test("test_getMovies_with_valid_filters", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(apiMovieList));
+
+    const filters: MovieFilters = {
+      page: 1,
+      genreId: 28,
+      sortBy: "popularity.desc",
+    };
+    const result: ListPaginationMovie = await getMovies(filters, genreMap);
+
+    expect(result.metaData.pagination.currentPage).toBe(1);
+    expect(result.metaData.pagination.totalPages).toBe(1);
+    expect(result.movies.length).toBe(1);
+    expect(result.movies[0].title).toBe("Test Movie");
+    expect(result.movies[0].genres).toEqual(["Action", "Adventure"]);
+  });
+
+  test("test_getMovies_fetch_failure", async () => {
+    fetchMock.mockRejectOnce(new Error("Network Error"));
+
+    const filters: MovieFilters = {
+      page: 1,
+      genreId: 28,
+      sortBy: "popularity.desc",
+    };
+
+    await expect(getMovies(filters, genreMap)).rejects.toThrow("Network Error");
+  });
+});
+
+//test movieGenres
+describe("getMovieGenres", () => {
+  const mockApiMovieGenres: ApiMovieGenres = {
+    genres: [
+      { id: 1, name: "Action" },
+      { id: 2, name: "Comedy" },
+    ],
+  };
+
+  const mockGenreList: GenreList = {
+    genreMap: new Map([
+      [1, "Action"],
+      [2, "Comedy"],
+    ]),
+    genreOption: [
+      { value: "1", label: "Action" },
+      { value: "2", label: "Comedy" },
+    ],
+  };
 
   beforeEach(() => {
-    // Configuramos el mock para devolver los datos de películas simulados
-    (getMovies as jest.Mock).mockResolvedValue(mockMovies);
+    global.fetch = jest.fn();
   });
 
-  test('Renderiza un mensaje cuando no hay películas disponibles', async () => {
-    (getMovies as jest.Mock).mockResolvedValue([]);
-  
-    render(<Home />);
-  
-    await waitFor(() => {
-      screen.debug(); // Esto imprimirá el contenido del DOM
-      expect(screen.getByText('No hay películas disponibles en este momento')).toBeTruthy();
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it("should return a GenreList object containing a map of genre IDs to names and an array of genre options", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => mockApiMovieGenres,
     });
-  });
-  
+
+    const result = await getMovieGenres();
+
+    expect(result).toEqual(mockGenreList);
   });
 
+  it("should handle HTTP errors gracefully and throw an appropriate error message", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+      status: 500,
+      statusText: "Internal Server Error",
+    });
+
+    await expect(getMovieGenres()).rejects.toThrow(
+      "Lo sentimos, pero no pudimos cargar la página. Intenta nuevamente más tarde"
+    );
+  });
+});
+
+//test getDetail
+
+describe("getMovieDetail", () => {
+  const genreMap = new Map<number, string>([
+    [28, "Action"],
+    [12, "Adventure"],
+  ]);
+
+  beforeEach(() => {
+    global.fetch = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it("should successfully fetch and return movie details when provided with a valid movie ID and genre map", async () => {
+    const apiMovie: ApiMovieResult = {
+      adult: false,
+      backdrop_path: "/path.jpg",
+      genre_ids: [28, 12],
+      id: 123,
+      original_language: "en",
+      original_title: "Test Movie",
+      overview: "Test overview",
+      popularity: 10,
+      poster_path: "/poster.jpg",
+      release_date: "2023-01-01",
+      title: "Test Movie",
+      video: false,
+      vote_average: 8,
+      vote_count: 100,
+    };
+
+    const expectedMovie: Movie = formatMovie(apiMovie, genreMap);
+
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(apiMovie),
+    });
+
+    const movie = await getMovieDetail(123, genreMap);
+    expect(movie).toEqual(expectedMovie);
+  });
+
+
+  it("should handle HTTP errors gracefully and throw an appropriate error message", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+    });
+
+    await expect(getMovieDetail(123, genreMap)).rejects.toThrow(
+      "Lo sentimos, pero no pudimos cargar la página. Intenta nuevamente más tarde"
+    );
+  });
+});
